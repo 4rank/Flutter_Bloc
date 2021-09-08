@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:project/bloc/bloc_base.dart';
 
 enum MainBlocEvent {
