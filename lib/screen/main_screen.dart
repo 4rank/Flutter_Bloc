@@ -14,7 +14,9 @@ class MainScreenState extends State<MainScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("My first BLoC app"),
+        title: Text("First BLoC app"),
+        backgroundColor: (Colors.deepOrange),
+        textTheme: (Typography.blackHelsinki),
       ),
       body: Center(
         child: Column(
@@ -39,6 +41,7 @@ class MainScreenState extends State<MainScreen> {
         onPressed: () => bloc.inEvent.add(MainBlocEvent.incrementCounter),
         tooltip: 'Increment',
         child: Icon(Icons.add),
+        backgroundColor: (Colors.green),
       ),
     );
   }
