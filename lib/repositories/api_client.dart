@@ -12,7 +12,7 @@ class QuoteApiClient {
     required this.httpClient,
   });
 
-  Future<Quote> httpQuote() async {
+  Future<Quote> fetchQuote() async {
     final url = '$baseUrl/quotes/random';
     final response = await this.httpClient.get(url);
 

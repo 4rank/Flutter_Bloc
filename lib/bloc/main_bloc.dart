@@ -1,50 +1,27 @@
-import 'dart:async';
+import 'package:bloc/bloc.dart' show Bloc;
+
+import 'package:project/repositories/repositories.dart';
+import 'package:project/models/models.dart';
 import 'package:project/bloc/bloc_base.dart';
 
-enum MainBlocEvent {
-  incrementCounter
-}
+class QuoteBloc extends Bloc<QuoteEvent, QuoteState> {
+  final QuoteRepository repository;
 
-class MainBloc extends BlocBase {
-  // data
-  int counter = 0;
-
-  final StreamController<int> counterController = StreamController<int>();
-  final StreamController<MainBlocEvent> eventController =
-  StreamController<MainBlocEvent>();
-
-  Sink<int> get inCounter => counterController.sink;
-  Stream<int> get outCounter => counterController.stream;
-
-  Sink<MainBlocEvent> get inEvent => eventController.sink;
-  Stream<MainBlocEvent> get outEvent => eventController.stream;
-
-  MainBloc() {
-    outEvent.listen(_handleEvent);
-  }
-
-  void onIncrementButton() {
-    handleIncrementCounterEvent();
-  }
+  QuoteBloc({ required this.repository});
 
   @override
-  void dispose() {
-    eventController.close();
-    counterController.close();
-  }
+  QuoteState get initialState => QuoteEmpty();
 
-  void _handleEvent(MainBlocEvent event) {
-    switch (event) {
-      case MainBlocEvent.incrementCounter:
-        handleIncrementCounterEvent();
-        break;
-      default:
-        assert(false, "321 never reach");
-        break;
+  @override
+  Stream<QuoteState> mapEventToState(QuoteEvent event) async* {
+    if (event is FetchQuote) {
+      yield QuoteLoading();
+      try {
+        final Quote quote = await repository.fetchQuote();
+        yield QuoteLoaded(quote: quote);
+      } catch (_) {
+        yield QuoteError();
+      }
     }
-  }
-
-  void handleIncrementCounterEvent() {
-    inCounter.add(++counter);
   }
 }
