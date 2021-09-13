@@ -13,8 +13,8 @@ class Quote extends Equatable {
   static Quote fromJson(dynamic json) {
     return Quote(
       id: json['_id'],
-      quoteName: json['quoteText'],
-      quoteFood: json['quoteAuthor'],
+      quoteName: json['quoteName'],
+      quoteFood: json['quoteFood'],
     );
   }
 
