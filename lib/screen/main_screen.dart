@@ -1,48 +1,38 @@
 import 'package:flutter/material.dart';
-import 'package:project/bloc/bloc_provider.dart';
-import 'package:project/bloc/main_bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-class MainScreen extends StatefulWidget {
-  @override
-  State<StatefulWidget> createState() => MainScreenState();
-}
+import 'package:project/bloc/bloc_base.dart';
 
-class MainScreenState extends State<MainScreen> {
+class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final MainBloc bloc = BlocProvider.of(context);
-
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("First BLoC app"),
-        backgroundColor: (Colors.deepOrange),
-        textTheme: (Typography.blackHelsinki),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'You have pushed the button this many times:',
+    return BlocBuilder<QuoteBloc, QuoteState>(
+      builder: (context, state) {
+        if (state is QuoteEmpty) {
+          BlocProvider.of<QuoteBloc>(context).add(FetchQuote());
+        }
+        if (state is QuoteError) {
+          return Center(
+            child: Text('failed'),
+          );
+        }
+        if (state is QuoteLoaded) {
+          return ListTile(
+            leading: Text(
+              '${state.quote.id}',
+              style: TextStyle(fontSize: 15.0),
+              textScaleFactor: 3.0,
             ),
-            StreamBuilder(
-              stream: bloc.outCounter,
-              builder: (BuildContext context, AsyncSnapshot<int> snapshot) {
-                return Text(
-                  "${snapshot.data ?? 0}",
-                  style: Theme.of(context).textTheme.headline4,
-                );
-              },
-            )
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => bloc.inEvent.add(MainBlocEvent.incrementCounter),
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
-        backgroundColor: (Colors.green),
-      ),
+            title: Text(state.quote.quoteName),
+            isThreeLine: true,
+            subtitle: Text(state.quote.quoteFood),
+            dense: true,
+          );
+        }
+        return Center(
+          child: CircularProgressIndicator(),
+        );
+      },
     );
   }
 }

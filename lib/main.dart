@@ -1,39 +1,54 @@
 import 'package:flutter/material.dart';
-import 'package:project/bloc/bloc_provider.dart';
-import 'package:project/bloc/main_bloc.dart';
+import 'package:http/http.dart' as http;
+import 'package:bloc/bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'package:project/bloc/bloc_base.dart';
+import 'package:project/repositories/api_client.dart';
+import 'package:project/repositories/repositories.dart';
 import 'package:project/screen/main_screen.dart';
 
-void main() => runApp(MyApp());
-
-class MyApp extends StatelessWidget {
+class MyApp extends BlocDelegate {
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: MyHomePage(),
-    );
+  void onTransition(Bloc bloc, Transition transition) {
+    super.onTransition(bloc, transition);
+    print(transition);
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key? key}) : super(key: key);
+void main() {
+  BlocSupervisor.delegate = MyApp();
 
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
+  final QuoteRepository repository = QuoteRepository(
+    quoteApiClient: QuoteApiClient(
+      httpClient: http.Client(),
+    ),
+  );
+
+  runApp(App(
+    repository: repository,
+  ));
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class App extends StatelessWidget {
+  final QuoteRepository repository;
+
+  App({Key? key, required this.repository})
+      : super(key: key);
+
   @override
   Widget build(BuildContext context) {
-    final MainBloc bloc = MainBloc();
-    final MainScreen screen = MainScreen();
-
-    return BlocProvider(
-      child: screen,
-      bloc: bloc,
+    return MaterialApp(
+      title: 'REST API App',
+      home: Scaffold(
+        appBar: AppBar(
+          title: Text('Quote'),
+        ),
+        body: BlocProvider(
+          create: (context) => QuoteBloc(repository: repository),
+          child: HomePage(),
+        ),
+      ),
     );
   }
 }
