@@ -3,7 +3,7 @@ import 'package:http/http.dart' as http;
 import 'package:project/models/models.dart';
 
 class QuoteApiClient {
-  final baseUrl = 'https://random-data-api.com/documentation';
+  final baseUrl = 'https://random-data-api.com/api/color/random_color';
   final http.Client httpClient;
 
   QuoteApiClient({

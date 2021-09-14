@@ -23,10 +23,8 @@ class HomePage extends StatelessWidget {
               style: TextStyle(fontSize: 15.0),
               textScaleFactor: 3.0,
             ),
-            title: Text(state.quote.quoteName),
+            title: Text(state.quote.quoteColor),
             isThreeLine: true,
-            subtitle: Text(state.quote.quoteFood),
-            dense: true,
           );
         }
         return Center(

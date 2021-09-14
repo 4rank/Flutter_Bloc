@@ -2,19 +2,17 @@ import 'package:equatable/equatable.dart';
 
 class Quote extends Equatable {
   final id;
-  final String quoteName;
-  final String quoteFood;
+  final String quoteColor;
 
-  const Quote({this.id, required this.quoteName, required this.quoteFood});
+  const Quote({this.id, required this.quoteColor});
 
   @override
-  List<Object> get props => [id, quoteName, quoteFood];
+  List<Object> get props => [id, quoteColor];
 
   static Quote fromJson(dynamic json) {
     return Quote(
       id: json['_id'],
-      quoteName: json['quoteName'],
-      quoteFood: json['quoteFood'],
+      quoteColor: json['quoteName'],
     );
   }
 
