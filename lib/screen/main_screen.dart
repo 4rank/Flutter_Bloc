@@ -25,6 +25,8 @@ class HomePage extends StatelessWidget {
             ),
             title: Text(state.quote.quoteColor),
             isThreeLine: true,
+            subtitle: Text(state.quote.quoteHex),
+            dense: true,
           );
         }
         return Center(

@@ -14,7 +14,7 @@ class QuoteEmpty extends QuoteState {}
 class QuoteLoading extends QuoteState {}
 
 class QuoteLoaded extends QuoteState {
-  final Quote quote;
+  final Color quote;
 
   const QuoteLoaded({required this.quote});
 

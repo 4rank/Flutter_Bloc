@@ -10,8 +10,8 @@ class QuoteApiClient {
     required this.httpClient,
   });
 
-  Future<Quote> fetchQuote() async {
-    final url = '$baseUrl/quotes/random';
+  Future<Color> fetchQuote() async {
+    final url = '$baseUrl';
     final response = await this.httpClient.get(url);
 
     if (response.statusCode != 200) {
@@ -19,6 +19,6 @@ class QuoteApiClient {
     }
 
     final json = jsonDecode(response.body);
-    return Quote.fromJson(json);
+    return Color.fromJson(json);
   }
 }

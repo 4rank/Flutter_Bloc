@@ -8,7 +8,7 @@ class QuoteRepository {
 
   QuoteRepository({required this.quoteApiClient});
 
-  Future<Quote> fetchQuote() async {
+  Future<Color> fetchQuote() async {
     return await quoteApiClient.fetchQuote();
   }
 }
