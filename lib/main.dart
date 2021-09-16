@@ -1,52 +1,51 @@
-import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'package:bloc/bloc.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'dart:ui';
 
-import 'package:project/bloc/bloc_base.dart';
-import 'package:project/repositories/api_client.dart';
-import 'package:project/repositories/repositories.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:project/screen/main_screen.dart';
 
-class MyApp extends BlocDelegate {
-  @override
-  void onTransition(Bloc bloc, Transition transition) {
-    super.onTransition(bloc, transition);
-    print(transition);
-  }
-}
+void main() => runApp(MyApp());
 
-void main() {
-  BlocSupervisor.delegate = MyApp();
-
-  final Repository repository = Repository(
-    quoteApiClient: ApiClient(
-      httpClient: http.Client(),
-    ),
-  );
-
-  runApp(App(
-    repository: repository,
-  ));
-}
-
-class App extends StatelessWidget {
-  final Repository repository;
-
-  App({Key? key, required this.repository})
-      : super(key: key);
-
+class MyApp extends StatelessWidget {
+  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'REST API App',
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text('Quote'),
+      title: 'Flutter Demo',
+      theme: ThemeData(
+        primaryColor: Colors.white,
+        textTheme: TextTheme(
+          headline6: TextStyle(fontSize: 30, color: Colors.black),
         ),
-        body: BlocProvider(
-          create: (context) => ColorBloc(repository: repository),
-          child: HomePage(),
+      ),
+      home: MyHomePage(),
+    );
+  }
+}
+
+class MyHomePage extends StatefulWidget {
+  MyHomePage({Key? key}) : super(key: key);
+
+  @override
+  _MyHomePageState createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Container(
+        child: ColorWidget(),
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            stops: [0.0, 0.7],
+            colors: [
+              Color(0xff265dd0),
+              Color(0xff58c6c2),
+            ],
+          ),
         ),
       ),
     );

@@ -7,7 +7,7 @@ class ColorBloc {
   final BehaviorSubject<ColorResponse> _subject =
   BehaviorSubject<ColorResponse>();
 
-  getUser() async {
+  getColor() async {
     ColorResponse response = await _repository.getColor();
     _subject.sink.add(response);
   }
