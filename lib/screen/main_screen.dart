@@ -6,10 +6,10 @@ import 'package:project/bloc/bloc_base.dart';
 class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<QuoteBloc, QuoteState>(
+    return BlocBuilder<ColorBloc, QuoteState>(
       builder: (context, state) {
         if (state is QuoteEmpty) {
-          BlocProvider.of<QuoteBloc>(context).add(FetchQuote());
+          BlocProvider.of<ColorBloc>(context).add(FetchQuote());
         }
         if (state is QuoteError) {
           return Center(

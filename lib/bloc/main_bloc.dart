@@ -1,27 +1,22 @@
-import 'package:bloc/bloc.dart' show Bloc;
+import 'package:project/models/ColorResponse.dart';
+import 'package:project/repositories/repository.dart';
 import 'package:rxdart/rxdart.dart';
-import 'package:project/repositories/repositories.dart';
-import 'package:project/models/models.dart';
-import 'package:project/bloc/bloc_base.dart';
 
-class QuoteBloc extends Bloc<QuoteEvent, QuoteState> {
-  final QuoteRepository repository;
+class ColorBloc {
+  final Repository _repository = Repository();
+  final BehaviorSubject<ColorResponse> _subject =
+  BehaviorSubject<ColorResponse>();
 
-  QuoteBloc({required this.repository});
-
-  @override
-  QuoteState get initialState => QuoteEmpty();
-
-  @override
-  Stream<QuoteState> mapEventToState(QuoteEvent event) async* {
-    if (event is FetchQuote) {
-      yield QuoteLoading();
-      try {
-        final Color quote = await repository.fetchQuote();
-        yield QuoteLoaded(quote: quote);
-      } catch (_) {
-        yield QuoteError();
-      }
-    }
+  getUser() async {
+    ColorResponse response = await _repository.getColor();
+    _subject.sink.add(response);
   }
+
+  dispose() {
+    _subject.close();
+  }
+
+  BehaviorSubject<ColorResponse> get subject => _subject;
+
 }
+final bloc = ColorBloc();

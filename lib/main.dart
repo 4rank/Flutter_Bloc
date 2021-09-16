@@ -19,7 +19,7 @@ class MyApp extends BlocDelegate {
 void main() {
   BlocSupervisor.delegate = MyApp();
 
-  final QuoteRepository repository = QuoteRepository(
+  final Repository repository = Repository(
     quoteApiClient: ApiClient(
       httpClient: http.Client(),
     ),
@@ -31,7 +31,7 @@ void main() {
 }
 
 class App extends StatelessWidget {
-  final QuoteRepository repository;
+  final Repository repository;
 
   App({Key? key, required this.repository})
       : super(key: key);
@@ -45,7 +45,7 @@ class App extends StatelessWidget {
           title: Text('Quote'),
         ),
         body: BlocProvider(
-          create: (context) => QuoteBloc(repository: repository),
+          create: (context) => ColorBloc(repository: repository),
           child: HomePage(),
         ),
       ),

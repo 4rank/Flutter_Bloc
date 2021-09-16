@@ -5,7 +5,7 @@ class ApiClient {
   final baseUrl = 'https://random-data-api.com/api/color/random_color';
   final Dio _dio = Dio();
 
-  Future<ColorResponse> getUser() async {
+  Future<ColorResponse> getColor() async {
     try {
       Response response = await _dio.get(baseUrl);
       return ColorResponse.fromJson(response.data);
