@@ -20,7 +20,7 @@ void main() {
   BlocSupervisor.delegate = MyApp();
 
   final QuoteRepository repository = QuoteRepository(
-    quoteApiClient: QuoteApiClient(
+    quoteApiClient: ApiClient(
       httpClient: http.Client(),
     ),
   );

@@ -4,7 +4,7 @@ import 'package:project/repositories/api_client.dart';
 import 'package:project/models/models.dart';
 
 class QuoteRepository {
-  final QuoteApiClient quoteApiClient;
+  final ApiClient quoteApiClient;
 
   QuoteRepository({required this.quoteApiClient});
 

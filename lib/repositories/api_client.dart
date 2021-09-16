@@ -1,24 +1,17 @@
-import 'dart:convert';
-import 'package:http/http.dart' as http;
-import 'package:project/models/models.dart';
+import 'package:project/models/ColorResponse.dart';
+import 'package:dio/dio.dart';
 
-class QuoteApiClient {
+class ApiClient {
   final baseUrl = 'https://random-data-api.com/api/color/random_color';
-  final http.Client httpClient;
+  final Dio _dio = Dio();
 
-  QuoteApiClient({
-    required this.httpClient,
-  });
-
-  Future<Color> fetchQuote() async {
-    final url = '$baseUrl';
-    final response = await this.httpClient.get(url);
-
-    if (response.statusCode != 200) {
-      throw new Exception('error getting quotes');
+  Future<ColorResponse> getUser() async {
+    try {
+      Response response = await _dio.get(baseUrl);
+      return ColorResponse.fromJson(response.data);
+    } catch (error, stacktrace) {
+      print("Exception occured: $error stackTrace: $stacktrace");
+      return ColorResponse.withError("$error");
     }
-
-    final json = jsonDecode(response.body);
-    return Color.fromJson(json);
   }
 }
