@@ -38,8 +38,8 @@ class _MyHomePageState extends State<MyHomePage> {
         child: ColorWidget(),
         decoration: BoxDecoration(
           gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
+            begin: Alignment.topRight,
+            end: Alignment.bottomLeft,
             stops: [0.0, 0.7],
             colors: [
               Color(0xff265dd0),
